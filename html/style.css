@@ -1,0 +1,341 @@
+:root {
+    --cyan: #00e5ff;
+    --violet: #7c5cff;
+    --hot: #ff2d55;
+    --ok: #41f0a0;
+    --text: #eaf6ff;
+    --muted: #9fb0c3;
+    --line: rgba(0, 229, 255, 0.45);
+    --health: #41f0a0;
+    --health-low: #ff2d55;
+    --armor: #00e5ff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: transparent !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    color: var(--text);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/*
+  Sit ABOVE the default minimap (not on top of it).
+  Minimap is ~18–22vh tall in the bottom-left; keep a clear gap.
+*/
+#hud {
+    position: absolute;
+    left: 1.6vw;
+    bottom: 24.5vh;
+    background: transparent !important;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.status-panel {
+    position: relative;
+    width: min(220px, 24vw);
+    padding: 10px 12px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: linear-gradient(
+        145deg,
+        rgba(8, 22, 40, 0.72) 0%,
+        rgba(6, 14, 28, 0.55) 55%,
+        rgba(0, 0, 0, 0.28) 100%
+    );
+    box-shadow:
+        0 0 0 1px rgba(0, 229, 255, 0.1),
+        0 0 24px rgba(0, 229, 255, 0.14),
+        0 8px 24px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+}
+
+.edge {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    height: 1px;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(0, 229, 255, 0.55) 20%,
+        rgba(124, 92, 255, 0.55) 80%,
+        transparent 100%
+    );
+    pointer-events: none;
+}
+
+.edge-top { top: 0; }
+.edge-bottom { bottom: 0; opacity: 0.55; }
+
+.corner {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+}
+
+.corner::before,
+.corner::after {
+    content: '';
+    position: absolute;
+    background: var(--cyan);
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.7);
+}
+
+.c-tl { top: 4px; left: 4px; }
+.c-tl::before { width: 10px; height: 1px; top: 0; left: 0; }
+.c-tl::after { width: 1px; height: 10px; top: 0; left: 0; }
+
+.c-tr { top: 4px; right: 4px; }
+.c-tr::before { width: 10px; height: 1px; top: 0; right: 0; }
+.c-tr::after { width: 1px; height: 10px; top: 0; right: 0; }
+
+.c-bl { bottom: 4px; left: 4px; }
+.c-bl::before { width: 10px; height: 1px; bottom: 0; left: 0; }
+.c-bl::after { width: 1px; height: 10px; bottom: 0; left: 0; }
+
+.c-br { bottom: 4px; right: 4px; }
+.c-br::before { width: 10px; height: 1px; bottom: 0; right: 0; }
+.c-br::after { width: 1px; height: 10px; bottom: 0; right: 0; }
+
+.tag-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.pulse-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 8px rgba(0, 229, 255, 0.9);
+    animation: pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.85); }
+}
+
+.tag {
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 10px rgba(0, 229, 255, 0.45);
+}
+
+.bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.bar-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.bar-icon {
+    font-size: 11px;
+    width: 14px;
+    text-align: center;
+    line-height: 1;
+}
+
+.health-icon {
+    color: var(--health);
+    text-shadow: 0 0 8px rgba(65, 240, 160, 0.65);
+}
+
+.armor-icon {
+    color: var(--armor);
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.65);
+    font-size: 10px;
+}
+
+.bar-label {
+    flex: 1;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.bar-val {
+    font-size: 11px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    text-shadow: 0 0 8px rgba(234, 246, 255, 0.25);
+}
+
+.track {
+    position: relative;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(0, 20, 40, 0.65);
+    border: 1px solid rgba(0, 229, 255, 0.18);
+    overflow: hidden;
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.45);
+}
+
+.fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0%;
+    border-radius: 999px;
+    transition: width 0.12s linear, background 0.2s ease;
+}
+
+.health-fill {
+    background: linear-gradient(90deg, #1fa86a 0%, var(--health) 55%, #7dffc8 100%);
+    box-shadow: 0 0 10px rgba(65, 240, 160, 0.55);
+}
+
+.health-fill.low {
+    background: linear-gradient(90deg, #a01830 0%, var(--hot) 55%, #ff7a95 100%);
+    box-shadow: 0 0 10px rgba(255, 45, 85, 0.55);
+}
+
+.armor-fill {
+    background: linear-gradient(90deg, #007a99 0%, var(--cyan) 50%, var(--violet) 100%);
+    box-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+}
+
+.track-glow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.08) 50%,
+        transparent 100%
+    );
+    opacity: 0.5;
+}
+
+/* —— Waypoint strip —— */
+.waypoint {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 229, 255, 0.18);
+}
+
+.wp-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.wp-pin {
+    color: var(--violet);
+    font-size: 12px;
+    text-shadow: 0 0 10px rgba(124, 92, 255, 0.8);
+    animation: pinPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes pinPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.wp-tag {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    color: var(--violet);
+    text-shadow: 0 0 8px rgba(124, 92, 255, 0.45);
+}
+
+.wp-body {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+}
+
+.wp-block {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.wp-divider {
+    width: 1px;
+    margin: 0 10px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(0, 229, 255, 0.45) 50%,
+        transparent 100%
+    );
+}
+
+.wp-label {
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.wp-value {
+    font-size: 16px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: var(--text);
+    text-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+    letter-spacing: 0.02em;
+}
+
+.wp-value.accent {
+    color: var(--cyan);
+    text-shadow: 0 0 12px rgba(0, 229, 255, 0.55);
+}
+
+/* Slide-in when HUD appears */
+#hud:not(.hidden) .status-panel {
+    animation: slideIn 0.35s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

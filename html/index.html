@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BS Race Map HUD</title>
+    <style>
+        html, body { background: transparent !important; background-color: transparent !important; }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body style="background: transparent !important; background-color: transparent !important;">
+    <div id="hud" class="hidden">
+        <div class="status-panel">
+            <div class="edge edge-top"></div>
+            <div class="edge edge-bottom"></div>
+
+            <div class="tag-row">
+                <span class="pulse-dot"></span>
+                <span class="tag">STATUS</span>
+            </div>
+
+            <div class="bars">
+                <div class="bar-row">
+                    <div class="bar-meta">
+                        <span class="bar-icon health-icon">❤</span>
+                        <span class="bar-label">HEALTH</span>
+                        <span class="bar-val" id="healthVal">100%</span>
+                    </div>
+                    <div class="track">
+                        <div class="fill health-fill" id="healthFill"></div>
+                        <div class="track-glow health-glow"></div>
+                    </div>
+                </div>
+
+                <div class="bar-row">
+                    <div class="bar-meta">
+                        <span class="bar-icon armor-icon">◆</span>
+                        <span class="bar-label">SHIELD</span>
+                        <span class="bar-val" id="armorVal">0%</span>
+                    </div>
+                    <div class="track">
+                        <div class="fill armor-fill" id="armorFill"></div>
+                        <div class="track-glow armor-glow"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="waypoint hidden" id="waypoint">
+                <div class="wp-head">
+                    <span class="wp-pin">◎</span>
+                    <span class="wp-tag">WAYPOINT</span>
+                </div>
+                <div class="wp-body">
+                    <div class="wp-block">
+                        <span class="wp-label">DISTANCE</span>
+                        <span class="wp-value" id="distance">—</span>
+                    </div>
+                    <div class="wp-divider"></div>
+                    <div class="wp-block">
+                        <span class="wp-label">ETA</span>
+                        <span class="wp-value accent" id="eta">--:--</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="corner c-tl"></div>
+            <div class="corner c-tr"></div>
+            <div class="corner c-bl"></div>
+            <div class="corner c-br"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
